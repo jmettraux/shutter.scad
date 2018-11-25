@@ -51,7 +51,7 @@ module cloudy(height=1) {
   translate([ -.9, -.5, 0 ]) cloud(height);
 }
 
-cloudy();
+translate([ 7, -14, 0 ]) cloudy();
 
 module bulb(height=1, rays=3) {
   linear_extrude(height=height) {
@@ -91,4 +91,12 @@ module streetlamp(height=1, rays=3) {
 }
 
 translate([ 0, -14, 0 ]) streetlamp(.5, rays=2);
+
+module penta(height=1, base=2, side=2, length=4) {
+  b = base / 2;
+  linear_extrude(height=height) {
+    polygon([ [ -b, 0 ], [ -b, side ], [ 0, length ], [ b, side ], [ b, 0 ] ]);
+  }
+}
+penta(base=4,side=2.5,length=6);
 
