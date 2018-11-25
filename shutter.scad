@@ -1,6 +1,18 @@
 
 $fn=60;
 
+//
+// ray()
+
+module ray(angle=0, length=1.4, width=.4, delta=2) {
+  rotate(angle)
+    translate([ 0, delta, 0 ])
+    square([ width, length ], center=true);
+}
+
+//
+// cloud()
+
 module cloud(height=1) {
   linear_extrude(height=height) {
     translate([ -1, 0, 0 ]) circle(1);
@@ -10,7 +22,8 @@ module cloud(height=1) {
   }
 }
 
-translate([ 0, -7, 0 ]) cloud(.5);
+//
+// double_cloud()
 
 module double_cloud(height=1) {
   translate([ .6, -.5, 0 ]) {
@@ -22,13 +35,9 @@ module double_cloud(height=1) {
   }
 }
 
-translate([ -7, -14, 0 ]) double_cloud(.5);
+//
+// sun()
 
-module ray(angle=0, length=1.4, width=.4, delta=2) {
-  rotate(angle)
-    translate([ 0, delta, 0 ])
-    square([ width, length ], center=true);
-}
 module sun(height=1, rays=8, length=1.3) {
   linear_extrude(height=height) {
     circle(1);
@@ -37,7 +46,8 @@ module sun(height=1, rays=8, length=1.3) {
   }
 }
 
-translate ([ 7, -7, 0 ]) sun(.5, rays=12);
+//
+// cloudy()
 
 module cloudy(height=1) {
   difference() {
@@ -51,7 +61,8 @@ module cloudy(height=1) {
   translate([ -.9, -.5, 0 ]) cloud(height);
 }
 
-translate([ 7, -14, 0 ]) cloudy();
+//
+// bulb()
 
 module bulb(height=1, rays=3) {
   linear_extrude(height=height) {
@@ -69,7 +80,8 @@ module bulb(height=1, rays=3) {
   }
 }
 
-translate ([ -7, -7, 0 ]) bulb(.5, rays=7);
+//
+// streetlamp()
 
 module slice(r=1, angle=30) {
   intersection() {
@@ -90,7 +102,8 @@ module streetlamp(height=1, rays=3) {
   }
 }
 
-translate([ 0, -14, 0 ]) streetlamp(.5, rays=2);
+//
+// penta()
 
 module penta(height=1, base=2, side=2, length=4) {
   b = base / 2;
@@ -98,5 +111,52 @@ module penta(height=1, base=2, side=2, length=4) {
     polygon([ [ -b, 0 ], [ -b, side ], [ 0, length ], [ b, side ], [ b, 0 ] ]);
   }
 }
-penta(base=4,side=2.5,length=6);
+
+//
+// plate()
+
+module plate(height=0.2, length=12, width=7.5, trans=1) {
+  tx = -length / 2 * trans;
+  ty = -width / 2 * trans;
+  translate([ tx, ty, 0 ])
+    linear_extrude(height=height) {
+      square([ length, width ]);
+    }
+}
+
+
+//
+// main
+
+difference() {
+  plate();
+  translate([ 0, -1, 0 ])
+    plate(height=0.3, length=10, width=2);
+  translate([ -5, -3.75, -.1 ])
+    plate(height=0.4, length=2, width=0.5, trans=0);
+  translate([ 3, -3.75, -.1 ])
+    plate(height=0.4, length=2, width=0.5, trans=0);
+  translate([ -5, 3.25, -.1 ])
+    plate(height=0.4, length=2, width=0.5, trans=0);
+  translate([ 3, 3.25, -.1 ])
+    plate(height=0.4, length=2, width=0.5, trans=0);
+}
+
+translate([ 0, 10, 0 ]) {
+  plate();
+  translate([ -6, -3.75, 0 ]) plate(0.5, 12, 0.5, trans=0);
+  translate([ -6, 3.25, 0 ]) plate(0.5, 12, 0.5, trans=0);
+  translate([ -5, -3.75, 0.5 ])
+    plate(height=0.2, length=2, width=0.5, trans=0);
+  translate([ 3, -3.75, 0.5 ])
+    plate(height=0.2, length=2, width=0.5, trans=0);
+  translate([ -5, 3.25, 0.5 ])
+    plate(height=0.2, length=2, width=0.5, trans=0);
+  translate([ 3, 3.25, 0.5 ])
+    plate(height=0.2, length=2, width=0.5, trans=0);
+}
+
+translate([ 0, -10, 0 ]) {
+  color("dodgerblue") plate(width=6.49);
+}
 
