@@ -75,7 +75,7 @@ module slice(r=1, angle=30) {
   intersection() {
     circle(r=r);
     square(r);
-    rotate(a - 90) square(r);
+    rotate(angle - 90) square(r);
   }
 }
 
