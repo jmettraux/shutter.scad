@@ -12,6 +12,18 @@ module cloud(height=1) {
 
 translate([ 0, -7, 0 ]) cloud(.5);
 
+module double_cloud(height=1) {
+  translate([ .6, -.5, 0 ]) {
+    difference() {
+      translate([ -1.4, .5, 0 ]) cloud(height);
+      cloud(height);
+    }
+    translate([ .2, -.2, 0 ]) cloud(height);
+  }
+}
+
+double_cloud();
+
 module ray(angle=0, length=1.4, width=.4, delta=2) {
   rotate(angle)
     translate([ 0, delta, 0 ])
@@ -25,7 +37,7 @@ module sun(height=1, rays=8, length=1.3) {
   }
 }
 
-translate ([ 7, -7, 0 ]) sun(.5, rays=6);
+translate ([ 7, -7, 0 ]) sun(.5, rays=12);
 
 module bulb(height=1, rays=3) {
   linear_extrude(height=height) {
@@ -64,5 +76,5 @@ module streetlamp(height=1, rays=3) {
   }
 }
 
-streetlamp(rays=2);
+translate([ 0, -14, 0 ]) streetlamp(.5, rays=2);
 
