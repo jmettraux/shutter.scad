@@ -74,8 +74,15 @@ module bulb(height=1, rays=3) {
     if (rays == 3) {
       for (a = [ 90, 0, -90 ]) ray(a);
     }
+    else if (rays == 5) {
+      for (a = [ 110, 60, 0, -60, -110 ]) ray(a);
+    }
+    else if (rays == 7) {
+      for (a = [ 135, 90, 45, 0, -45, -90, -135 ]) ray(a);
+    }
+    //else if (rays == 9) {
     else {
-      for (a = [ 45, 90, 135, 0, -45, -90, -135 ]) ray(a);
+      for (a = [ 135, 100, 65, 35, 0, -35, -65, -100, -135 ]) ray(a);
     }
   }
 }
@@ -97,8 +104,15 @@ module streetlamp(height=1, rays=3) {
     translate([ -.4, 0, 0 ]) square([ 2, .5 ]);
     translate([ 1.5, -3, 0 ]) square([ .5, 3 ]);
     translate([ 1.5, 0, 0 ]) slice(.5, 90);
-      for (a = [ 90, 135, 180, 225 ])
-        ray(a, length=0.9, width=.3, delta=1.1);
+    if (rays == 4) {
+      for (a = [ 90, 135, 180, 225 ]) ray(a, length=0.9, width=.3, delta=1.1);
+    }
+    else if (rays == 3) {
+      for (a = [ 90, 145, 215 ]) ray(a, length=0.9, width=.3, delta=1.1);
+    }
+    else {
+      for (a = [ 135, 180 ]) ray(a, length=0.9, width=.3, delta=1.1);
+    }
   }
 }
 
@@ -165,9 +179,10 @@ difference() {
   translate([ -2, -3.5, .12 ]) linear_extrude(height=0.1)
     text("shutter speed", size=.4, font=f, spacing=fs);
 
+  dx = .73;
+
   for (ev = evs) {
 
-    dx = .73;
     x = -4.7 + (16 - ev[0]) * dx;
     tx = dx / 2 - .1;
     ty = dx / 2;
@@ -188,6 +203,32 @@ difference() {
     translate([ x - dx / 2.8, -2.9, .12 ]) linear_extrude(height=.1)
       text(ev[3], size=.2, font=f, spacing=fs); // EV number
   }
+
+  translate([ -4.8, .39, .12 ]) scale([ .1, .1, .1 ])
+    sun(rays=11);
+  translate([ -4.8 + 1 * dx, .39, .12 ]) scale([ .1, .1, .1 ])
+    sun(rays=9);
+  translate([ -4.8 + 2 * dx - 0.05, .29, .12 ]) scale([ .1, .1, .1 ])
+    cloudy();
+  translate([ -4.8 + 3 * dx + 0.05, .29, .12 ]) scale([ .1, .1, .1 ])
+    cloud();
+  translate([ -4.8 + 4 * dx + 0.05, .29, .12 ]) scale([ .1, .1, .1 ])
+    cloud();
+  translate([ -4.8 + 5 * dx + 0.0, .29, .12 ]) scale([ .1, .1, .1 ])
+    double_cloud();
+  //
+  translate([ -4.8 + 8 * dx + 0.0, .33, .12 ]) scale([ .1, .1, .1 ])
+    bulb(rays=9);
+  translate([ -4.8 + 9 * dx + 0.0, .33, .12 ]) scale([ .1, .1, .1 ])
+    bulb(rays=7);
+  translate([ -4.8 + 10 * dx + 0.0, .33, .12 ]) scale([ .1, .1, .1 ])
+    bulb(rays=5);
+  translate([ -4.8 + 11 * dx + 0.0, .33, .12 ]) scale([ .1, .1, .1 ])
+    bulb(rays=3);
+  translate([ -4.8 + 12 * dx + 0.0, .40, .12 ]) scale([ .1, .1, .1 ])
+    streetlamp(rays=4);
+  translate([ -4.8 + 13 * dx + 0.0, .40, .12 ]) scale([ .1, .1, .1 ])
+    streetlamp(rays=2);
 }
 
 // bottom plate
