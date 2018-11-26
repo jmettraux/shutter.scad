@@ -128,33 +128,41 @@ module plate(height=0.2, length=12, width=7.5, trans=1) {
 //
 // main
 
+// top plate
+
 difference() {
+
+  f = "Menlo:style=Normal";
+  fs = .9;
+
   plate();
-  translate([ 0, -1, 0 ])
-    plate(height=0.3, length=10, width=2);
-  translate([ -5, -3.75, -.1 ])
-    plate(height=0.4, length=2, width=0.5, trans=0);
-  translate([ 3, -3.75, -.1 ])
-    plate(height=0.4, length=2, width=0.5, trans=0);
-  translate([ -5, 3.25, -.1 ])
-    plate(height=0.4, length=2, width=0.5, trans=0);
-  translate([ 3, 3.25, -.1 ])
-    plate(height=0.4, length=2, width=0.5, trans=0);
+
+  translate([ 0, -1, 0 ]) plate(height=0.3, length=10, width=2);
+  translate([ -5, -3.75, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
+  translate([ 3, -3.75, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
+  translate([ -5, 3.25, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
+  translate([ 3, 3.25, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
+
+  translate([ -5.8, .3, .12 ]) linear_extrude(height=0.1)
+    text("EV", size=.4, font=f, spacing=fs);
+
+  translate([ -2, -3.5, .12 ]) linear_extrude(height=0.1)
+    text("shutter speed", size=.4, font=f, spacing=fs);
 }
+
+// bottom plate
 
 translate([ 0, 10, 0 ]) {
   plate();
   translate([ -6, -3.75, 0 ]) plate(0.5, 12, 0.5, trans=0);
   translate([ -6, 3.25, 0 ]) plate(0.5, 12, 0.5, trans=0);
-  translate([ -5, -3.75, 0.5 ])
-    plate(height=0.2, length=2, width=0.5, trans=0);
-  translate([ 3, -3.75, 0.5 ])
-    plate(height=0.2, length=2, width=0.5, trans=0);
-  translate([ -5, 3.25, 0.5 ])
-    plate(height=0.2, length=2, width=0.5, trans=0);
-  translate([ 3, 3.25, 0.5 ])
-    plate(height=0.2, length=2, width=0.5, trans=0);
+  translate([ -5, -3.75, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
+  translate([ 3, -3.75, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
+  translate([ -5, 3.25, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
+  translate([ 3, 3.25, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
 }
+
+// inside plate
 
 translate([ 0, -10, 0 ]) {
   color("dodgerblue") plate(width=6.49);
