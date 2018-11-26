@@ -134,45 +134,59 @@ f = "Menlo:style=Normal";
 fs = .9;
 
 evs = [
-  [ 16, "bright sun", "on sand or snow" ],
-  [ 15, "bright sunny day", "(hard shadows)" ],
-  [ 14, "hazy sunshine", "(soft shadows)" ],
-  [ 13, "bright cloudy day", "(no shadows)" ],
-  [ 12, "heavily overcast", "day" ],
-  [ 11, "open shade", "sunsets" ],
-  [ 10, "immediately after", "sunset" ],
-  [ 9, "neon lights", "spot-lit subjects" ],
-  [ 8, "floodlit stadium", "bright day interior" ],
-  [ 7, "indoor sports", "stage shows" ],
-  [ 6, "bright night interior", "shady day interior" ],
-  [ 5, "average home", "night interior" ],
-  [ 4, "floodlit buildings", "bright streetlights" ],
-  [ 3, "streetlights", "fireworks" ] ];
+  [ 16, "bright sun", "on sand or snow", "2000" ],
+  [ 15, "bright sunny day", "(hard shadows)", "1000" ],
+  [ 14, "hazy sunshine", "(soft shadows)", "500" ],
+  [ 13, "bright cloudy day", "(no shadows)", "250" ],
+  [ 12, "heavily overcast", "day", "125" ],
+  [ 11, "open shade", "sunsets", "60" ],
+  [ 10, "immediately after", "sunset", "30" ],
+  [ 9, "neon lights", "spot-lit subjects", "15" ],
+  [ 8, "floodlit stadium", "bright day interior", "8" ],
+  [ 7, "indoor sports", "stage shows", "4" ],
+  [ 6, "bright night interior", "shady day interior", "2" ],
+  [ 5, "average home", "night interior", "1" ],
+  [ 4, "floodlit buildings", "bright streetlights", "2\"" ],
+  [ 3, "streetlights", "fireworks", "4\"" ] ];
 
 difference() {
 
   plate();
 
-  translate([ 0, -1, 0 ]) plate(height=0.3, length=10, width=2);
+  translate([ 0, -1.5, 0 ]) plate(height=0.3, length=10, width=1.5);
   translate([ -5, -3.75, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
   translate([ 3, -3.75, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
   translate([ -5, 3.25, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
   translate([ 3, 3.25, -.1 ]) plate(height=0.4, length=2, width=0.5, trans=0);
 
-  translate([ -5.8, .3, .12 ]) linear_extrude(height=0.1)
+  translate([ -5.8, -.1, .12 ]) linear_extrude(height=0.1)
     text("EV", size=.4, font=f, spacing=fs);
 
   translate([ -2, -3.5, .12 ]) linear_extrude(height=0.1)
     text("shutter speed", size=.4, font=f, spacing=fs);
 
   for (ev = evs) {
+
     dx = .73;
     x = -4.7 + (16 - ev[0]) * dx;
-    dy = .7;
-    translate([ x, dy, .12 ]) rotate(90) linear_extrude(height=.1)
+    tx = dx / 2 - .1;
+    ty = dx / 2;
+
+    translate([ x, -.7, .12 ]) linear_extrude(height=.1)
+      polygon([ [ 0, 0 ], [ tx, ty ], [ -tx, ty ] ]); // triangle
+    translate([ x + tx - 0.03, -ty + 0.03, .12 ]) linear_extrude(height=.1)
+      square([ .04, 3.5 ]); // line
+    translate([ x - dx / 2.8, -.3, .12 ]) linear_extrude(height=.1)
+      text(str(ev[0]), size=.3, font=f, spacing=fs); // EV number
+    translate([ x - 0.03, .7, .12 ]) rotate(90) linear_extrude(height=.1)
       text(ev[1], size=.2, font=f, spacing=fs - .1);
-    translate([ x + dx / 2 - .15, dy, .12 ]) rotate(90) linear_extrude(height=.1)
+    translate([ x - 0.03 + dx / 2 - .15, .7, .12 ]) rotate(90) linear_extrude(height=.1)
       text(ev[2], size=.2, font=f, spacing=fs - .1);
+
+    translate([ x, -2.3, .12 ]) linear_extrude(height=.1) rotate(180)
+      polygon([ [ 0, 0 ], [ tx, ty ], [ -tx, ty ] ]); // triangle
+    translate([ x - dx / 2.8, -2.9, .12 ]) linear_extrude(height=.1)
+      text(ev[3], size=.2, font=f, spacing=fs); // EV number
   }
 }
 
