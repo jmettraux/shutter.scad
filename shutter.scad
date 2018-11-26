@@ -130,10 +130,26 @@ module plate(height=0.2, length=12, width=7.5, trans=1) {
 
 // top plate
 
-difference() {
+f = "Menlo:style=Normal";
+fs = .9;
 
-  f = "Menlo:style=Normal";
-  fs = .9;
+evs = [
+  [ 16, "bright sun", "on sand or snow" ],
+  [ 15, "bright sunny day", "(hard shadows)" ],
+  [ 14, "hazy sunshine", "(soft shadows)" ],
+  [ 13, "bright cloudy day", "(no shadows)" ],
+  [ 12, "heavily overcast", "day" ],
+  [ 11, "open shade", "sunsets" ],
+  [ 10, "immediately after", "sunset" ],
+  [ 9, "neon lights", "spot-lit subjects" ],
+  [ 8, "floodlit stadium", "bright day interior" ],
+  [ 7, "indoor sports", "stage shows" ],
+  [ 6, "bright night interior", "shady day interior" ],
+  [ 5, "average home", "night interior" ],
+  [ 4, "floodlit buildings", "bright streetlights" ],
+  [ 3, "streetlights", "fireworks" ] ];
+
+difference() {
 
   plate();
 
@@ -148,6 +164,16 @@ difference() {
 
   translate([ -2, -3.5, .12 ]) linear_extrude(height=0.1)
     text("shutter speed", size=.4, font=f, spacing=fs);
+
+  for (ev = evs) {
+    dx = .73;
+    x = -4.7 + (16 - ev[0]) * dx;
+    dy = .7;
+    translate([ x, dy, .12 ]) rotate(90) linear_extrude(height=.1)
+      text(ev[1], size=.2, font=f, spacing=fs - .1);
+    translate([ x + dx / 2 - .15, dy, .12 ]) rotate(90) linear_extrude(height=.1)
+      text(ev[2], size=.2, font=f, spacing=fs - .1);
+  }
 }
 
 // bottom plate
