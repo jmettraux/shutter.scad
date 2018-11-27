@@ -234,18 +234,28 @@ difference() {
 // bottom plate
 
 translate([ 0, 10, 0 ]) {
+
   plate();
+
   translate([ -6, -3.75, 0 ]) plate(0.5, 12, 0.5, trans=0);
   translate([ -6, 3.25, 0 ]) plate(0.5, 12, 0.5, trans=0);
   translate([ -5, -3.75, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
   translate([ 3, -3.75, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
   translate([ -5, 3.25, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
   translate([ 3, 3.25, 0.5 ]) plate(height=0.2, length=2, width=0.5, trans=0);
+
+  difference() {
+    translate([ -6, 2.75, 0 ]) plate(0.5, 12, 0.5, trans=0);
+    translate([ -5.5, 2.75, 0 ]) plate(0.5, 11, 0.5, trans=0);
+  }
 }
 
 // inside plate
 
 translate([ 0, -10, 0 ]) {
-  color("dodgerblue") plate(width=6.49);
+  color("dodgerblue") union() {
+    plate(width=5.99);
+    translate([ 0, 3.10, 0 ]) plate(.1, .5, .5, .5);
+  }
 }
 
